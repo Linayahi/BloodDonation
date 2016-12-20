@@ -1,0 +1,35 @@
+sudo kill $(ps -aef | grep java | grep apache | awk '{print $2}')
+
+sudo service mongod start
+mongo
+show dbs 
+use KASUDB
+show collections
+db.users.find()
+db.Groups.remove({})
+
+
+cd /opt/android-studio/bin
+./studio.sh
+
+
+http://localhost:8080/KasuKasu/addexchangepoint?lat=6249721.28241&lon=261162.34767&name=Travail&radius=50
+
+	"lat" : 6249721.28241,
+	"lon" : 261162.34767,
+
+
+
+Janvier : 
+vendredi 6 
+jeudi 19 à 15h
+lundi 23 à 13h
+
+collection.find(
+				new BasicDBObject()
+				.append("_id",id)
+				.append("subscribers.id_user",userID))
+
+
+
+
