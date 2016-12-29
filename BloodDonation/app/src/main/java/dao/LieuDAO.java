@@ -2,13 +2,15 @@ package dao;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.sqlite.SQLiteDatabase;
 
+import database.DatabaseHandler;
 import metier.LieuDon;
 
 /**
  * Created by lina on 13/12/16.
  */
-public class LieuDAO extends DAOBase {
+public class LieuDAO {
     public static final String LIEU_ID = "lieu_id";
     public static final String LIEU_NOM = "nom";
     public static final String LIEU_ADRESSE = "adresse";
@@ -28,11 +30,26 @@ public class LieuDAO extends DAOBase {
 
     public static final String LIEU_TABLE_DROP = "DROP TABLE IF EXISTS " + LIEU_TABLE_NAME + ";";
 
-    public LieuDAO(Context pContext) {
-        super(pContext);
+    private DatabaseHandler maBaseSQLite;
+    private SQLiteDatabase db;
+
+    public LieuDAO(Context context) {
+        maBaseSQLite = DatabaseHandler.getInstance(context);
     }
 
-    public void addLieu(LieuDon lieu)
+    //Ouverture de la table en lecture/écriture
+    public void open()
+    {
+        db = maBaseSQLite.getWritableDatabase();
+    }
+
+    //Fermeture de l'accès à la BDD
+    public void close()
+    {
+        db.close();
+    }
+
+    public long addLieu(LieuDon lieu)
     {
         ContentValues value = new ContentValues();
         value.put(LieuDAO.LIEU_NOM, lieu.getNom());
@@ -41,7 +58,7 @@ public class LieuDAO extends DAOBase {
         value.put(LieuDAO.LIEU_LON , lieu.getLongitude());
         value.put(LieuDAO.LIEU_DESC, lieu.getDesc());
 
-        mDb.insert(LieuDAO.LIEU_TABLE_NAME, null, value);
+       return db.insert(LieuDAO.LIEU_TABLE_NAME, null, value);
     }
 
 

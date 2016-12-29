@@ -3,13 +3,15 @@ package dao;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 
+import database.DatabaseHandler;
 import metier.Event;
 
 /**
  * Created by lina on 13/12/16.
  */
-public class EventDAO extends DAOBase {
+public class EventDAO{
 
     public static final String USER_TABLE_NAME = "User";
     public static final String USER_ID = "user_id";
@@ -37,17 +39,32 @@ public class EventDAO extends DAOBase {
 
     public static final String EVENT_TABLE_DROP = "DROP TABLE IF EXISTS " + EVENT_TABLE_NAME + ";";
 
-    public EventDAO(Context pContext) {
-        super(pContext);
+    private DatabaseHandler maBaseSQLite;
+    private SQLiteDatabase db;
+
+    public EventDAO(Context context) {
+        maBaseSQLite = DatabaseHandler.getInstance(context);
     }
 
-    public void addEvent(Event e)
+    //Ouverture de la table en lecture/écriture
+    public void open()
+    {
+        db = maBaseSQLite.getWritableDatabase();
+    }
+
+    //Fermeture de l'accès à la BDD
+    public void close()
+    {
+        db.close();
+    }
+
+    public long addEvent(Event e)
     {
         ContentValues value = new ContentValues();
         value.put(EventDAO.EVENT_USER , e.getUser_id());
         value.put(EventDAO.EVENT_LIEU, e.getLieu_id());
         value.put(EventDAO.EVENT_DATE, e.getDate());
 
-        mDb.insert(EventDAO.EVENT_TABLE_NAME, null, value);
+        return db.insert(EventDAO.EVENT_TABLE_NAME, null, value);
     }
 }

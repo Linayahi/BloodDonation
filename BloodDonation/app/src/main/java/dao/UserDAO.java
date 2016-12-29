@@ -3,13 +3,15 @@ package dao;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 
+import database.DatabaseHandler;
 import metier.User;
 
 /**
  * Created by lina on 13/12/16.
  */
-public class UserDAO extends DAOBase{
+public class UserDAO {
 
     public static final String USER_ID = "user_id";
     public static final String USER_NOM = "nom";
@@ -32,11 +34,27 @@ public class UserDAO extends DAOBase{
 
     public static final String USER_TABLE_DROP = "DROP TABLE IF EXISTS " + USER_TABLE_NAME + ";";
 
-    public UserDAO(Context pContext) {
-        super(pContext);
+    private DatabaseHandler maBaseSQLite;
+    private SQLiteDatabase db;
+
+    public UserDAO(Context context) {
+        maBaseSQLite = DatabaseHandler.getInstance(context);
     }
 
-    public void addUser(User u)
+    //Ouverture de la table en lecture/écriture
+    public void open()
+    {
+        db = maBaseSQLite.getWritableDatabase();
+    }
+
+    //Fermeture de l'accès à la BDD
+    public void close()
+    {
+        db.close();
+    }
+
+    // Retourne l'id du nouvel enregistrement inséré, ou -1 en cas d'erreur
+    public long addUser(User u)
     {
         ContentValues value = new ContentValues();
         value.put(UserDAO.USER_NOM, u.getNom());
@@ -45,25 +63,23 @@ public class UserDAO extends DAOBase{
         value.put(UserDAO.USER_SEXE, u.getSexe());
         value.put(UserDAO.USER_EMAIL, u.getEmail());
         value.put(UserDAO.USER_PASSWORD, u.getPassword());
-        mDb.insert(UserDAO.USER_TABLE_NAME, null, value);
+        return db.insert(UserDAO.USER_TABLE_NAME,null,value);
+
     }
 
 
-    public User getUserbyEmail(String email)
+    public boolean getUserbyEmail(String email, String password)
     {
-        User u = new User();
-        Cursor cursor = mDb.rawQuery("select * from " + USER_TABLE_NAME + " where "+USER_EMAIL+" = ?", new String[]{email});
-        if(cursor.getCount()>0) {
-            cursor.moveToFirst();
-            u.setId(cursor.getInt(0));
-            u.setNom(cursor.getString(1));
-            u.setPrenom(cursor.getString(2));
-            u.setAge(cursor.getInt(3));
-            u.setSexe(cursor.getString(4));
-            u.setEmail(cursor.getString(5));
-            u.setPassword(cursor.getString(6));
+        Cursor cursor = db.rawQuery("select * from " + USER_TABLE_NAME + " where "+USER_EMAIL+" = ? AND " + USER_PASSWORD + "= ?", new String[]{email,password});
+        if(cursor.getCount()>0)
+        {
             cursor.close();
+            return true;
         }
-        return u;
+        else
+        {
+            cursor.close();
+            return false;
+        }
     }
 }

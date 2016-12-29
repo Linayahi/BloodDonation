@@ -22,6 +22,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/password"
         android:hint="Mot de passe"
+        android:inputType="textPassword"
         android:layout_below="@+id/email"
         />
 
