@@ -43,7 +43,9 @@ public class LoginActivity extends AppCompatActivity {
                     if (userdao.getUserbyEmail(message_email, message_mdp))
                     {
                         Toast.makeText(getBaseContext(), "OK", Toast.LENGTH_SHORT).show();
-                        Intent intent = new Intent(LoginActivity.this,MapsActivity.class);
+                        //Intent intent = new Intent(LoginActivity.this,MapsActivity.class);
+                        Intent intent = new Intent(LoginActivity.this,EventActivity.class);
+
                         startActivity(intent);
                     }
                     else
@@ -52,7 +54,6 @@ public class LoginActivity extends AppCompatActivity {
 
                     }
                     userdao.close();
-
                 }
 
 
