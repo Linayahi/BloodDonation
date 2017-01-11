@@ -92,4 +92,27 @@ public class LieuDAO {
         return lieuList;
     }
 
+
+    public LieuDon getLieuByName(String nom)
+    {
+        Cursor cursor = db.rawQuery("select * from " + LIEU_TABLE_NAME + " where "+LIEU_NOM+" = ? " , new String[]{nom});
+        if(cursor!=null)
+        {
+            cursor.moveToFirst();
+            LieuDon lieu = new LieuDon();
+            lieu.setId(Integer.parseInt(cursor.getString(0)));
+            lieu.setNom(cursor.getString(1));
+            lieu.setAdresse(cursor.getString(2));
+            lieu.setLatitude(Double.parseDouble(cursor.getString(3)));
+            lieu.setLongitude(Double.parseDouble(cursor.getString(4)));
+            lieu.setDesc(cursor.getString(5));
+            return lieu;
+        }
+        else
+        {
+            cursor.close();
+            return null;
+        }
+    }
+
 }
