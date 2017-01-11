@@ -1,13 +1,17 @@
 package com.blooddonation.blooddonation;
 
 import android.Manifest;
+import android.app.ProgressDialog;
 import android.content.pm.PackageManager;
 import android.location.Location;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
@@ -24,7 +28,15 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
-public class MapsActivity extends FragmentActivity implements OnMapReadyCallback,
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+
+import dao.LieuDAO;
+import metier.LieuDon;
+
+public class MapsActivity extends AppCompatActivity implements OnMapReadyCallback,
         GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener,
         LocationListener{
@@ -34,6 +46,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     LocationRequest mLocationRequest;
     Location mLastLocation;
     Marker mCurrLocationMarker;
+
+    private ProgressDialog pDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,6 +93,14 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             buildGoogleApiClient();
             mMap.setMyLocationEnabled(true);
         }
+
+//        LatLng test2= new LatLng(48.8399, 2.36179);
+//        mMap.addMarker(new MarkerOptions().position(test2).title("Marker test2"));
+
+
+
+
+        new GetLieux().execute();
     }
 
     protected synchronized void buildGoogleApiClient()
@@ -206,4 +228,101 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             //You can add here other case statements according to your requirement.
         }
     }
+
+    /****************************************  Récupérer la liste de services ***************************************************************/
+
+
+    private class GetLieux extends AsyncTask<String, Void, ArrayList<HashMap<String, String>>>
+    {
+
+        @Override
+        protected void onPreExecute()
+        {
+            super.onPreExecute();
+            pDialog = new ProgressDialog(MapsActivity.this);
+            pDialog.setMessage("Chargement ...");
+            pDialog.setCancelable(false);
+            pDialog.show();
+
+        }
+
+        @Override
+        protected ArrayList<HashMap<String,String>> doInBackground(String... args)
+        {
+            LieuDAO lieudao = new LieuDAO(getApplicationContext());
+            lieudao.open();
+            List<LieuDon> lieux = lieudao.getAllLieux();
+
+            ArrayList<HashMap<String, String>> lieuList = new ArrayList<HashMap<String, String>>();
+
+            for (LieuDon l : lieux)
+            {
+                HashMap<String, String> map = new HashMap<String, String>();
+                map.put(LieuDAO.LIEU_ID, String.valueOf(l.getId()));
+                map.put(LieuDAO.LIEU_NOM, l.getNom());
+                map.put(LieuDAO.LIEU_ADRESSE, l.getAdresse());
+                map.put(LieuDAO.LIEU_LAT, String.valueOf(l.getLatitude()));
+                map.put(LieuDAO.LIEU_LON, String.valueOf(l.getLongitude()));
+                map.put(LieuDAO.LIEU_DESC, l.getDesc());
+
+
+                lieuList.add(map);
+            }
+
+
+            lieudao.close();
+
+            return lieuList;
+
+
+
+        }
+
+
+        protected void onPostExecute(ArrayList<HashMap<String, String>> result)
+        {
+
+            super.onPostExecute(result);
+
+            if (pDialog.isShowing())  pDialog.dismiss();
+
+            if (result!=null)
+            {
+                for(int i=0; i<result.size();i++)
+                {
+
+                    Log.i("Ajout d'un marker",String.valueOf(i));
+                    double lat = Double.parseDouble(result.get(i).get(LieuDAO.LIEU_LAT));
+                    double lon = Double.parseDouble(result.get(i).get(LieuDAO.LIEU_LON));
+                    Log.i("latitude",String.valueOf(lat));
+                    Log.i("longitude",String.valueOf(lon));
+
+
+
+
+                    LatLng position = new LatLng(lat,lon);
+
+
+                    mMap.addMarker(new MarkerOptions()
+                            .position(position)
+                            .title(result.get(i).get(LieuDAO.LIEU_NOM))
+                    );
+
+
+
+
+                }
+
+
+            }
+
+            else Toast.makeText(MapsActivity.this, "Aucun lieu disponible", Toast.LENGTH_LONG).show();
+
+
+
+        }
+    }
+
+
+/**************************************** Fin Récupérer la liste de services*************************************/
 }

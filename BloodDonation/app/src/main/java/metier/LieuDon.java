@@ -11,14 +11,15 @@ public class LieuDon {
     private Double latitude;
     private String desc;
 
-    public LieuDon(int id, String nom, String adresse, Double longitude, Double latitude, String desc) {
-        this.id = id;
+    public LieuDon(String nom, String adresse, Double latitude, Double longitude, String desc) {
         this.nom = nom;
         this.adresse = adresse;
-        this.longitude = longitude;
         this.latitude = latitude;
+        this.longitude = longitude;
         this.desc = desc;
     }
+
+    public LieuDon() { super(); }
 
     public int getId() {
         return id;

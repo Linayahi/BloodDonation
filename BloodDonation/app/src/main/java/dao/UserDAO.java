@@ -5,7 +5,11 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import database.DatabaseHandler;
+import metier.LieuDon;
 import metier.User;
 
 /**
@@ -81,5 +85,31 @@ public class UserDAO {
             cursor.close();
             return false;
         }
+    }
+
+    public List<User> getAllUsers() {
+        List<User> lieuList = new ArrayList<User>();
+        // Select All Query
+        String selectQuery = "SELECT  * FROM " + USER_TABLE_NAME;
+
+        Cursor cursor = db.rawQuery(selectQuery, null);
+
+        // looping through all rows and adding to list
+        if (cursor.moveToFirst()) {
+            do {
+                User lieu = new User();
+                lieu.setId(Integer.parseInt(cursor.getString(0)));
+                lieu.setNom(cursor.getString(1));
+                lieu.setPrenom(cursor.getString(2));
+                lieu.setAge(Integer.parseInt(cursor.getString(3)));
+                lieu.setSexe(cursor.getString(4));
+                lieu.setEmail(cursor.getString(5));
+                lieu.setPassword(cursor.getString(6));
+
+                lieuList.add(lieu);
+            } while (cursor.moveToNext());
+        }
+
+        return lieuList;
     }
 }
