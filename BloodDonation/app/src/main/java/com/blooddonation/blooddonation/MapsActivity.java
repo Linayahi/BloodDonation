@@ -13,7 +13,9 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -55,7 +57,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     Marker mCurrLocationMarker;
 
     private ProgressDialog pDialog;
-    Button btn_retour,btn_iti;
+    Button btn_event,btn_iti;
 
 
     @Override
@@ -66,6 +68,11 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+
+//        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+//        setSupportActionBar(toolbar);
+//        ActionBar actionBar = getSupportActionBar();
+//        actionBar.setDisplayHomeAsUpEnabled(true);
     }
 
 
@@ -337,10 +344,12 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
         dialog.show();
 
-        btn_retour = (Button) dialog.findViewById(R.id.btn_retour);
-        btn_retour.setOnClickListener(new View.OnClickListener() {
+        btn_event = (Button) dialog.findViewById(R.id.btn_event);
+        btn_event.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Intent intent = new Intent(MapsActivity.this,EventActivity.class);
+                startActivity(intent);
                 dialog.dismiss();
 
             }
