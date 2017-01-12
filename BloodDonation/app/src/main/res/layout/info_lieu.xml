@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:orientation="vertical" >
+
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="6dip"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:text="Nom"
+            android:id="@+id/stringnom"
+            />
+
+
+        <TextView
+            android:id="@+id/nomd"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:gravity="left"
+            android:textSize="16sp"
+            android:layout_below="@+id/stringnom"/>
+
+
+
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="6dip"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:text="Adresse"
+            android:id="@+id/stringadresse"
+            android:layout_below="@+id/nomd"/>
+
+        <TextView
+            android:id="@+id/adressed"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:gravity="left"
+            android:textSize="16sp"
+            android:layout_below="@+id/stringadresse"/>
+
+
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="6dip"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:text="Horaires"
+            android:id="@+id/stringdescription"
+            android:layout_below="@+id/adressed"
+            />
+
+
+        <TextView
+            android:id="@+id/descriptiond"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:gravity="left"
+            android:textSize="16sp"
+            android:layout_below="@+id/stringdescription"/>
+
+
+        <TextView
+            android:id="@+id/latituded"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:gravity="left"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:text="hidden"
+            android:visibility="gone"/>
+
+        <TextView
+            android:id="@+id/longituded"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:gravity="left"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:text="hidden"
+            android:visibility="gone"/>
+
+
+        <TextView
+            android:id="@+id/idserviced"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:gravity="left"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:text="hidden"
+            android:visibility="gone"/>
+
+
+
+        <Button
+            android:id="@+id/btn_event"
+            android:layout_width="130dp"
+            android:layout_height="40dp"
+            android:text="Programmer un don"
+            android:textColor="#FFFFFF"
+            android:textStyle="bold"
+            android:background="#6DBCDB"
+            android:layout_alignParentLeft="true"
+            android:layout_below="@+id/descriptiond" />
+
+
+
+        <Button
+            android:id="@+id/btn_iti"
+            android:layout_width="130dp"
+            android:layout_height="40dp"
+            android:text="Itinéraire"
+            android:textColor="#FFFFFF"
+            android:textStyle="bold"
+            android:background="#6DBCDB"
+            android:layout_alignParentRight="true"
+            android:layout_below="@+id/descriptiond" />
+
+    </RelativeLayout>

@@ -1,13 +1,25 @@
 package com.blooddonation.blooddonation;
 
 import android.Manifest;
+import android.app.Dialog;
+import android.app.ProgressDialog;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
+import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
+import android.util.Log;
+import android.view.View;
+import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
@@ -24,16 +36,29 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
-public class MapsActivity extends FragmentActivity implements OnMapReadyCallback,
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+
+import dao.LieuDAO;
+import metier.LieuDon;
+
+public class MapsActivity extends AppCompatActivity implements OnMapReadyCallback,
         GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener,
-        LocationListener{
+        LocationListener,
+        GoogleMap.OnMarkerClickListener{
 
     private GoogleMap mMap;
     GoogleApiClient mGoogleApiClient;
     LocationRequest mLocationRequest;
     Location mLastLocation;
     Marker mCurrLocationMarker;
+
+    private ProgressDialog pDialog;
+    Button btn_event,btn_iti;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +68,11 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+
+//        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+//        setSupportActionBar(toolbar);
+//        ActionBar actionBar = getSupportActionBar();
+//        actionBar.setDisplayHomeAsUpEnabled(true);
     }
 
 
@@ -57,13 +87,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
      */
     @Override
     public void onMapReady(GoogleMap googleMap) {
-//        mMap = googleMap;
-//        // Add a marker in Sydney and move the camera
-//        LatLng sydney = new LatLng(-34, 151);
-//        mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
-//        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
-
         mMap = googleMap;
+        mMap.setOnMarkerClickListener(this);
         mMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
 
         //Initialize Google Play Services
@@ -79,6 +104,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             buildGoogleApiClient();
             mMap.setMyLocationEnabled(true);
         }
+
+        new GetLieux().execute();
     }
 
     protected synchronized void buildGoogleApiClient()
@@ -206,4 +233,147 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             //You can add here other case statements according to your requirement.
         }
     }
+
+
+
+    /****************************************  Récupérer la liste des lieux ***************************************************************/
+
+
+    private class GetLieux extends AsyncTask<String, Void, ArrayList<HashMap<String, String>>>
+    {
+
+        @Override
+        protected void onPreExecute()
+        {
+            super.onPreExecute();
+            pDialog = new ProgressDialog(MapsActivity.this);
+            pDialog.setMessage("Chargement ...");
+            pDialog.setCancelable(false);
+            pDialog.show();
+
+        }
+
+        @Override
+        protected ArrayList<HashMap<String,String>> doInBackground(String... args)
+        {
+            LieuDAO lieudao = new LieuDAO(getApplicationContext());
+            lieudao.open();
+            List<LieuDon> lieux = lieudao.getAllLieux();
+
+            ArrayList<HashMap<String, String>> lieuList = new ArrayList<HashMap<String, String>>();
+
+            for (LieuDon l : lieux)
+            {
+                HashMap<String, String> map = new HashMap<String, String>();
+                map.put(LieuDAO.LIEU_ID, String.valueOf(l.getId()));
+                map.put(LieuDAO.LIEU_NOM, l.getNom());
+                map.put(LieuDAO.LIEU_ADRESSE, l.getAdresse());
+                map.put(LieuDAO.LIEU_LAT, String.valueOf(l.getLatitude()));
+                map.put(LieuDAO.LIEU_LON, String.valueOf(l.getLongitude()));
+                map.put(LieuDAO.LIEU_DESC, l.getDesc());
+
+
+                lieuList.add(map);
+            }
+
+
+            lieudao.close();
+
+            return lieuList;
+
+
+
+        }
+
+
+        protected void onPostExecute(ArrayList<HashMap<String, String>> result)
+        {
+
+            super.onPostExecute(result);
+
+            if (pDialog.isShowing())  pDialog.dismiss();
+
+            if (result!=null)
+            {
+                for(int i=0; i<result.size();i++)
+                {
+
+                    double lat = Double.parseDouble(result.get(i).get(LieuDAO.LIEU_LAT));
+                    double lon = Double.parseDouble(result.get(i).get(LieuDAO.LIEU_LON));
+
+                    LatLng position = new LatLng(lat,lon);
+
+                    mMap.addMarker(new MarkerOptions()
+                            .position(position)
+                            .title(result.get(i).get(LieuDAO.LIEU_NOM))
+                    );
+                }
+
+            }
+
+            else Toast.makeText(MapsActivity.this, "Aucun lieu disponible", Toast.LENGTH_LONG).show();
+        }
+    }
+/****************************************      Fin Récupérer la liste des lieux    *************************************/
+
+@Override
+ public boolean onMarkerClick(final Marker marker)
+{
+    if (!(marker.getId().equals( mCurrLocationMarker.getId())))
+
+    {
+        final Dialog dialog = new Dialog(MapsActivity.this);
+        dialog.setContentView(R.layout.info_lieu);
+        dialog.setTitle("Détails du lieu");
+        dialog.getWindow().getDecorView().setBackgroundResource(android.R.color.white);
+        final TextView nomd = (TextView) dialog.findViewById(R.id.nomd);
+        final TextView adressed = (TextView) dialog.findViewById(R.id.adressed);
+        final TextView descriptiond = (TextView) dialog.findViewById(R.id.descriptiond);
+        final TextView latituded = (TextView) dialog.findViewById(R.id.latituded);
+        final TextView longituded = (TextView) dialog.findViewById(R.id.longituded);
+
+        LieuDAO lieudao = new LieuDAO(getApplicationContext());
+        lieudao.open();
+        LieuDon lieu = lieudao.getLieuByName(marker.getTitle());
+        nomd.setText(lieu.getNom());
+        adressed.setText(lieu.getAdresse());
+        descriptiond.setText(lieu.getDesc());
+        latituded.setText(String.valueOf(lieu.getLatitude()));
+        longituded.setText(String.valueOf(lieu.getLongitude()));
+        lieudao.close();
+
+        dialog.show();
+
+        btn_event = (Button) dialog.findViewById(R.id.btn_event);
+        btn_event.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MapsActivity.this,EventActivity.class);
+                startActivity(intent);
+                dialog.dismiss();
+
+            }
+        });
+
+        btn_iti = (Button) dialog.findViewById(R.id.btn_iti);
+        btn_iti.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v)
+            {
+                dialog.dismiss();
+                Uri gmmIntentUri = Uri.parse("google.navigation:q="+latituded.getText().toString()+","+longituded.getText().toString());
+                Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
+                mapIntent.setPackage("com.google.android.apps.maps");
+                startActivity(mapIntent);
+            }
+        });
+    }
+    else if (marker.getId().equals( mCurrLocationMarker.getId()))
+    {
+        marker.setTitle("Vous êtes ici");
+        marker.showInfoWindow();
+    }
+
+    return true;
+}
 }

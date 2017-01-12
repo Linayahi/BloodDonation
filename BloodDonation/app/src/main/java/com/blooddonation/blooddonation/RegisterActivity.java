@@ -12,9 +12,12 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 
+import java.util.List;
 import java.util.regex.Pattern;
 
+import dao.LieuDAO;
 import dao.UserDAO;
+import metier.LieuDon;
 import metier.User;
 
 public class RegisterActivity extends AppCompatActivity {
@@ -33,12 +36,15 @@ public class RegisterActivity extends AppCompatActivity {
                     + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$"
     );
 
-
+    List<LieuDon> lieux;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
+
+
+
 
         nom = (EditText) findViewById(R.id.nom);
         prenom = (EditText) findViewById(R.id.prenom);
@@ -52,6 +58,21 @@ public class RegisterActivity extends AppCompatActivity {
         register.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+
+//                Log.i("Starting: ", "Starting..");
+//                LieuDAO lieudao = new LieuDAO(getApplicationContext());
+//                Log.i("Opening: ", "Opening..");
+//                lieudao.open();
+//                // Reading all contacts
+//                 Log.i("Reading: ", "Reading all rows..");
+//                 lieux = lieudao.getAllLieux();
+//
+//                for (LieuDon l : lieux) {
+//                    String log = "Id: " + l.getId() + "Nom: " + l.getNom() + " ,Adresse: " + l.getAdresse() +" ,Latitude: " + l.getLatitude() + ", Logintude: "+ l.getLongitude()+ " , Description : "+ l.getDesc();
+//                    Log.i("Lieu: ", log);
+//                }
+//                lieudao.close();
 
                 String message_nom = nom.getText().toString();
                 String message_prenom = prenom.getText().toString();

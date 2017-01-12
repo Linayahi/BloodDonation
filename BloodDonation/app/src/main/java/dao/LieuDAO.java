@@ -2,7 +2,12 @@ package dao;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import database.DatabaseHandler;
 import metier.LieuDon;
@@ -49,6 +54,7 @@ public class LieuDAO {
         db.close();
     }
 
+
     public long addLieu(LieuDon lieu)
     {
         ContentValues value = new ContentValues();
@@ -61,5 +67,52 @@ public class LieuDAO {
        return db.insert(LieuDAO.LIEU_TABLE_NAME, null, value);
     }
 
+    // Getting all rows
+    public List<LieuDon> getAllLieux() {
+        List<LieuDon> lieuList = new ArrayList<LieuDon>();
+        // Select All Query
+        String selectQuery = "SELECT  * FROM " + LIEU_TABLE_NAME;
+
+        Cursor cursor = db.rawQuery(selectQuery, null);
+
+        // looping through all rows and adding to list
+        if (cursor.moveToFirst()) {
+            do {
+                LieuDon lieu = new LieuDon();
+                lieu.setId(Integer.parseInt(cursor.getString(0)));
+                lieu.setNom(cursor.getString(1));
+                lieu.setAdresse(cursor.getString(2));
+                lieu.setLatitude(Double.parseDouble(cursor.getString(3)));
+                lieu.setLongitude(Double.parseDouble(cursor.getString(4)));
+                lieu.setDesc(cursor.getString(5));
+                lieuList.add(lieu);
+            } while (cursor.moveToNext());
+        }
+
+        return lieuList;
+    }
+
+
+    public LieuDon getLieuByName(String nom)
+    {
+        Cursor cursor = db.rawQuery("select * from " + LIEU_TABLE_NAME + " where "+LIEU_NOM+" = ? " , new String[]{nom});
+        if(cursor!=null)
+        {
+            cursor.moveToFirst();
+            LieuDon lieu = new LieuDon();
+            lieu.setId(Integer.parseInt(cursor.getString(0)));
+            lieu.setNom(cursor.getString(1));
+            lieu.setAdresse(cursor.getString(2));
+            lieu.setLatitude(Double.parseDouble(cursor.getString(3)));
+            lieu.setLongitude(Double.parseDouble(cursor.getString(4)));
+            lieu.setDesc(cursor.getString(5));
+            return lieu;
+        }
+        else
+        {
+            cursor.close();
+            return null;
+        }
+    }
 
 }
