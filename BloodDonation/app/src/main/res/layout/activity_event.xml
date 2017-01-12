@@ -10,47 +10,13 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.blooddonation.blooddonation.EventActivity">
 
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/desc"
-        android:hint="Description"
-        android:inputType="textPassword"
-        android:layout_below="@+id/email"
-        />
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/date"
-        android:hint="Date"
-        android:inputType="textPassword"
-        android:layout_below="@+id/desc"
-        />
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/lieu"
-        android:hint="Lieu"
-        android:layout_below="@+id/date"
-        android:inputType="textPassword"
-        />
-
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/event"
-        android:layout_below="@+id/lieu"
         android:layout_centerHorizontal="true"
         android:textAllCaps="false"
         android:text="Ajouter un événement"/>
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/aff_event"
-        android:layout_below="@+id/event"
-        android:layout_centerHorizontal="true"
-        android:textAllCaps="false"
-        android:text="Voir mes événements"/>
 
 </RelativeLayout>

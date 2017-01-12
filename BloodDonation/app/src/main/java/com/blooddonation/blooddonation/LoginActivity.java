@@ -1,5 +1,6 @@
 package com.blooddonation.blooddonation;
 
+
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -9,7 +10,6 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import dao.UserDAO;
-import metier.User;
 
 public class LoginActivity extends AppCompatActivity {
     private Button redirection;
@@ -44,8 +44,9 @@ public class LoginActivity extends AppCompatActivity {
                     {
                         Toast.makeText(getBaseContext(), "OK", Toast.LENGTH_SHORT).show();
                         //Intent intent = new Intent(LoginActivity.this,MapsActivity.class);
-                        Intent intent = new Intent(LoginActivity.this,EventActivity.class);
+                        //Intent intent = new Intent(LoginActivity.this,EventActivity.class);
 
+                        Intent intent = new Intent(LoginActivity.this,QuizActivity.class);
                         startActivity(intent);
                     }
                     else
