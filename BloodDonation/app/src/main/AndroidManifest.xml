@@ -74,7 +74,7 @@
             android:label="Ajouter un évènment" />
         <activity
             android:name=".MenuActivity"
-            android:label="Accueil"
+            android:label="A proximité"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".ScanActivity" />
         <activity android:name=".GroupageActivity" />

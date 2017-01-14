@@ -264,7 +264,7 @@ public class QuizzActivity extends AppCompatActivity
             }
             else if (id == R.id.nav_map)
             {
-                Intent i = new Intent(QuizzActivity.this, MapsActivity.class);
+                Intent i = new Intent(QuizzActivity.this, MenuActivity.class);
                 startActivity(i);
 
             }
