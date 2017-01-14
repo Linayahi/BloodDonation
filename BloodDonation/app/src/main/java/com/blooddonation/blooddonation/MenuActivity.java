@@ -45,10 +45,6 @@ public class MenuActivity extends AppCompatActivity
         prenom = GetString("prenom");
         nom = GetString("nom");
 
-                               Log.i("email", email);
-                        Log.i("nom", prenom);
-                        Log.i("prenom", nom);
-
         View header = navigationView.getHeaderView(0);
         TextView username = (TextView) header.findViewById(R.id.username);
         TextView mail = (TextView) header.findViewById(R.id.email);
@@ -98,7 +94,6 @@ public class MenuActivity extends AppCompatActivity
 
         if (id == R.id.nav_profil)
         {
-            // Handle the camera action
         }
         else if (id == R.id.nav_map)
         {
@@ -113,7 +108,7 @@ public class MenuActivity extends AppCompatActivity
         }
         else if (id == R.id.nav_quizz)
         {
-            Intent i = new Intent(MenuActivity.this, QuizActivity.class);
+            Intent i = new Intent(MenuActivity.this, QuizzActivity.class);
             startActivity(i);
         }
 

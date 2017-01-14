@@ -27,7 +27,6 @@ public class User {
         this.nom = nom;
         this.prenom = prenom;
         this.age = age;
-
         this.sexe = sexe;
         this.email = email;
         this.password = password;

@@ -1,0 +1,351 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context="com.blooddonation.blooddonation.QuizzActivity"
+    tools:showIn="@layout/app_bar_menu">
+    <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/scrollView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true" >
+
+
+
+        <LinearLayout
+            xmlns:tools="http://schemas.android.com/tools"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingLeft="@dimen/activity_horizontal_margin"
+            android:orientation="vertical"
+            android:paddingRight="@dimen/activity_horizontal_margin"
+            android:paddingTop="@dimen/activity_vertical_margin"
+            android:paddingBottom="@dimen/activity_vertical_margin"
+            android:weightSum="1">
+
+            <!-- Question 1 -->
+            <TextView
+                android:id="@+id/quest1"
+                android:text="Question 1 : A partir de quel âge peut-on faire un don de sang ?"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                />
+            <RadioGroup
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:id="@+id/r1"
+                android:layout_below="@+id/quest1">
+
+
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="18"
+                    android:id="@+id/r_1_1" />
+                <RadioButton
+                    android:layout_width="107dp"
+                    android:layout_height="wrap_content"
+                    android:text="20"
+                    android:id="@+id/r_1_2" />
+            </RadioGroup>
+
+
+
+            <!-- Question 2 -->
+
+            <TextView
+                android:id="@+id/quest2"
+                android:text="Question 2 : Quel est le poids minimal idéal pour pouvoir faire un don de sang ?"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_below="@+id/r1"
+                />
+
+            <RadioGroup
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:id="@+id/r2"
+                android:layout_below="@+id/quest2">
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="50"
+                    android:id="@+id/r_2_1" />
+
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="60"
+                    android:id="@+id/r_2_2"/>
+            </RadioGroup>
+
+            <!-- Question 3 -->
+
+            <TextView
+                android:id="@+id/quest3"
+                android:text="Question 3 : Quel est le délai minimal entre deux prises de sang ?"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_below="@+id/r2"
+
+                />
+
+            <RadioGroup
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:id="@+id/r3"
+                android:layout_below="@+id/quest3">
+
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="4 semaines"
+                    android:id="@+id/r_3_1" />
+
+
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="8 semaines"
+                    android:id="@+id/r_3_2"/>
+            </RadioGroup>
+
+            <!-- Question 4 -->
+
+            <TextView
+                android:id="@+id/quest4"
+                android:text="Question 4 : Il ne faut pas avoir pris d'antibiotiques ... jours avant de faire un don de sang ?"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_below="@+id/r3"
+
+                />
+
+            <RadioGroup
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:id="@+id/r4"
+                android:layout_below="@+id/quest4">
+
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="20"
+                    android:id="@+id/r_4_1" />
+
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="15"
+                    android:id="@+id/r_4_2"
+                    android:layout_gravity="right" />
+            </RadioGroup>
+
+
+            <!-- Question 5 -->
+
+            <TextView
+                android:id="@+id/quest5"
+                android:text="Question 5 : Il ne faut pas avoir subi une intervention chirurgicale au cours des ... ?"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_below="@+id/r4"
+
+                />
+
+            <RadioGroup
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:id="@+id/r5"
+                android:layout_below="@+id/quest5">
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="4 denriers mois"
+                    android:id="@+id/r_5_1" />
+
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="8 derniers mois"
+                    android:id="@+id/r_5_2"
+                    android:layout_gravity="right" />
+
+            </RadioGroup>
+
+            <!-- Question 6 -->
+
+            <TextView
+                android:id="@+id/quest6"
+                android:text="Question 6 : Est-il possible d'effectuer un don si la personne est enceinte ?"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_below="@+id/r5"
+
+                />
+
+
+            <RadioGroup
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:id="@+id/r6"
+                android:layout_below="@+id/quest6">
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Oui"
+                    android:id="@+id/r_6_1" />
+
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Non"
+                    android:id="@+id/r_6_2"
+                    android:layout_gravity="right" />
+
+
+            </RadioGroup>
+
+            <TextView
+                android:id="@+id/quest7"
+                android:text="Question 7 : Est-il possible d'effectuer un don si la personne a eu des piercings ou des tatouages au cours des 4 derniers mois ?"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_below="@+id/r6"
+
+                />
+
+
+            <RadioGroup
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:id="@+id/r7"
+                android:layout_below="@+id/quest7">
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Oui"
+                    android:id="@+id/r_7_1" />
+
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Non"
+                    android:id="@+id/r_7_2"
+                    android:layout_gravity="right" />
+
+            </RadioGroup>
+            <TextView
+                android:id="@+id/quest8"
+                android:text="Question 8 : Une personne ayant bénéficié d'une transplantation et/ou d'une greffe peut donner de son sang ?"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_below="@+id/r7"
+
+                />
+
+
+            <RadioGroup
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:id="@+id/r8"
+                android:layout_below="@+id/quest8">
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Oui"
+                    android:id="@+id/r_8_1" />
+
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Non"
+                    android:id="@+id/r_8_2"
+                    android:layout_gravity="right" />
+
+
+            </RadioGroup>
+
+            <TextView
+                android:id="@+id/quest9"
+                android:text="Question 9 : Peut-on donner de son sang sachant que l'on a eu des soins dentaires lors des 3 derniers jours ?"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_below="@+id/r8"
+
+                />
+
+
+            <RadioGroup
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:id="@+id/r9"
+                android:layout_below="@+id/quest9">
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Oui"
+                    android:id="@+id/r_9_1" />
+
+
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Non"
+                    android:id="@+id/r_9_2"
+                    android:layout_gravity="right" />
+
+            </RadioGroup>
+
+            <TextView
+                android:id="@+id/text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_below="@+id/r9"
+                />
+
+            <Button
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/result"
+                android:layout_centerHorizontal="true"
+                android:textAllCaps="false"
+                android:text="Résultat"
+                android:textColor="@color/colorWhite"
+                android:background="@color/colorGrey"
+                android:textStyle="bold"
+                android:layout_below="@+id/text"
+                />
+
+        </LinearLayout>
+
+    </ScrollView>
+
+
+</RelativeLayout>
