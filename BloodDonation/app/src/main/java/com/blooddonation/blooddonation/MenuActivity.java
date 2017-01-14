@@ -45,6 +45,7 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 
@@ -456,8 +457,18 @@ public class MenuActivity extends AppCompatActivity
             btn_event.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent intent = new Intent(MenuActivity.this,EventActivity.class);
+                    Calendar cal = Calendar.getInstance();
+                    Intent intent = new Intent(Intent.ACTION_EDIT);
+                    intent.setType("vnd.android.cursor.item/event");
+                    intent.putExtra("beginTime", cal.getTimeInMillis());
+                    intent.putExtra("allDay", true);
+                    intent.putExtra("rrule", "FREQ=YEARLY");
+                    intent.putExtra("endTime", cal.getTimeInMillis()+60*60*1000);
+                    intent.putExtra("title", "Don de sang");
+                    //pour l'ajout du lieu de l'event ;)
+                    intent.putExtra("eventLocation",adressed.getText());
                     startActivity(intent);
+
                     dialog.dismiss();
 
                 }

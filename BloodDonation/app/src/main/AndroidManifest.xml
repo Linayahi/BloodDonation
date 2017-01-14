@@ -72,9 +72,6 @@
             android:name=".MapsActivity"
             android:label="A proximité" />
         <activity
-            android:name=".EventActivity"
-            android:label="Ajouter un évènment" />
-        <activity
             android:name=".MenuActivity"
             android:label="A proximité"
             android:theme="@style/AppTheme.NoActionBar" />
