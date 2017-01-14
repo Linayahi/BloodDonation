@@ -126,6 +126,7 @@ public class ScanActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
             File file = new File(photo);
+            saveString("photo",photo);
             mImageView1.setImageURI(Uri.fromFile(file));
             linearLayout.addView(mImageView1);
             mImageView1.setOnClickListener(new View.OnClickListener() {
@@ -155,5 +156,12 @@ public class ScanActivity extends AppCompatActivity {
     {
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         return sharedPreferences.getString(key, "");
+    }
+    public void saveString(String key, String value)
+    {
+        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString(key, value);
+        editor.commit();
     }
 }
