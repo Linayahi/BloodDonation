@@ -15,6 +15,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import dao.UserDAO;
+import metier.User;
 
 public class LoginActivity extends AppCompatActivity {
     private Button redirection;
@@ -54,21 +55,11 @@ public class LoginActivity extends AppCompatActivity {
                     User user = userdao.getUserbyEmail(message_email, message_mdp);
                     if (user!=null)
                     {
-<<<<<<< HEAD
                         SaveString("email", user.getEmail());
                         SaveString("nom", user.getNom());
                         SaveString("prenom", user.getPrenom());
 
                         Intent intent = new Intent(LoginActivity.this,MenuActivity.class);
-=======
-                        Toast.makeText(getBaseContext(), "OK", Toast.LENGTH_SHORT).show();
-                        //Intent intent = new Intent(LoginActivity.this,MapsActivity.class);
-                        //Intent intent = new Intent(LoginActivity.this,EventActivity.class);
-                       // Intent intent = new Intent(LoginActivity.this,MenuActivity.class);
-
-
-                        Intent intent = new Intent(LoginActivity.this,QuizActivity.class);
->>>>>>> fd1758df35b866c192b7f20f239f6f1ebe2b0152
                         startActivity(intent);
                     }
                     else

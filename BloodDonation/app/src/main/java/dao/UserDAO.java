@@ -6,6 +6,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
+import java.io.ByteArrayInputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,7 +15,7 @@ import metier.LieuDon;
 import metier.User;
 
 /**
- * Created by lina on 13/12/16.
+ * Created by lina, ouiza on 13/12/16.
  */
 public class UserDAO {
 
@@ -25,6 +26,7 @@ public class UserDAO {
     public static final String USER_SEXE = "sexe";
     public static final String USER_EMAIL = "email";
     public static final String USER_PASSWORD = "password";
+    public static final byte[] USER_IMAGE = null;
 
     public static final String USER_TABLE_NAME = "User";
     public static final String USER_TABLE_CREATE =
@@ -34,8 +36,9 @@ public class UserDAO {
                     USER_PRENOM+ " TEXT, " +
                     USER_AGE+ " INTEGER, " +
                     USER_SEXE+ " TEXT, " +
-                    USER_EMAIL+ " TEXT, " +
-                    USER_PASSWORD+ " TEXT);";
+                    USER_EMAIL+ " TEXT, "  +
+                    USER_PASSWORD+ " TEXT, " +
+                    USER_IMAGE+ " BLOB);";
 
     public static final String USER_TABLE_DROP = "DROP TABLE IF EXISTS " + USER_TABLE_NAME + ";";
 
@@ -68,6 +71,7 @@ public class UserDAO {
         value.put(UserDAO.USER_SEXE, u.getSexe());
         value.put(UserDAO.USER_EMAIL, u.getEmail());
         value.put(UserDAO.USER_PASSWORD, u.getPassword());
+        value.put(String.valueOf(UserDAO.USER_IMAGE),u.getImage());
         return db.insert(UserDAO.USER_TABLE_NAME,null,value);
 
     }
@@ -137,6 +141,7 @@ public class UserDAO {
                 lieu.setSexe(cursor.getString(4));
                 lieu.setEmail(cursor.getString(5));
                 lieu.setPassword(cursor.getString(6));
+                lieu.setImage(cursor.getBlob(7));
 
                 lieuList.add(lieu);
             } while (cursor.moveToNext());

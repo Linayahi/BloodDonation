@@ -33,6 +33,10 @@ public class EventActivity extends AppCompatActivity {
                 intent.putExtra("rrule", "FREQ=YEARLY");
                 intent.putExtra("endTime", cal.getTimeInMillis()+60*60*1000);
                 intent.putExtra("title", "Don de sang");
+
+                //pour l'ajout du lieu de l'event ;)
+
+                intent.putExtra("eventLocation", "");
                 startActivity(intent);
 
             }

@@ -14,6 +14,30 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.READ_CALENDAR" />
     <uses-permission android:name="android.permission.WRITE_CALENDAR" />
+    <uses-permission
+        android:name="android.permission.WRITE_EXTERNAL_STORAGE"
+        android:maxSdkVersion="18" />
+    <uses-permission
+        android:name="android.permission.CAMERA"/>
+
+    <!-- <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" /> -->
+
+
+    <!--     Not nessecarily true ;) -->
+    <uses-feature
+        android:name="android.hardware.camera"
+        android:required="true" />
+
+    <provider
+        android:name="android.support.v4.content.FileProvider"
+        android:authorities="com.blooddonation.blooddonation.android.fileprovider"
+        android:exported="false"
+        android:grantUriPermissions="true">
+        <meta-data
+            android:name="android.support.FILE_PROVIDER_PATHS"
+            android:resource="@xml/file_paths">
+        </meta-data>
+    </provider>
 
     <application
         android:allowBackup="true"
@@ -25,7 +49,6 @@
             android:name=".LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -49,12 +72,12 @@
             android:label="@string/title_activity_maps" />
         <activity android:name=".EventActivity" />
         <activity android:name=".QuizActivity" />
-        
         <activity
             android:name=".MenuActivity"
             android:label="Accueil"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
-
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".ScanActivity" />
+        <activity android:name=".GroupageActivity"></activity>
     </application>
 
 </manifest>

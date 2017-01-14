@@ -108,11 +108,13 @@ public class MenuActivity extends AppCompatActivity
         }
         else if (id == R.id.nav_image)
         {
-
+            Intent i = new Intent(MenuActivity.this, ScanActivity.class);
+            startActivity(i);
         }
         else if (id == R.id.nav_quizz)
         {
-
+            Intent i = new Intent(MenuActivity.this, QuizActivity.class);
+            startActivity(i);
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
