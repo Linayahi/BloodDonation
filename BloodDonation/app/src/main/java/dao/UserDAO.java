@@ -40,7 +40,7 @@ public class UserDAO {
                     USER_PASSWORD+ " TEXT, " +
                     USER_PHOTO+ " TEXT);";
 
-    public static final String USER_TABLE_DROP = "DROP TABLE IF EXISTS " + USER_TABLE_NAME + ";";
+   public static final String USER_TABLE_DROP = "DROP TABLE IF EXISTS " + USER_TABLE_NAME + ";";
 
     private DatabaseHandler maBaseSQLite;
     private SQLiteDatabase db;

@@ -116,7 +116,7 @@ public class RegisterActivity extends AppCompatActivity {
                                     startActivity(intent);
                                 }
 
-                                Log.i("résultat ",String.valueOf(userdao.addUser(u)));
+                                Log.i("résultat ",String.valueOf(resultat));
 
                                 userdao.close();
 

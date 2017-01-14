@@ -59,6 +59,11 @@ public class LoginActivity extends AppCompatActivity {
                         SaveString("nom", user.getNom());
                         SaveString("prenom", user.getPrenom());
                         SaveString("photo", user.getPhoto());
+
+                        Log.i("email", user.getEmail());
+                        Log.i("nom", user.getNom());
+                        Log.i("prenom", user.getPrenom());
+
                         Intent intent = new Intent(LoginActivity.this,MenuActivity.class);
                         startActivity(intent);
                     }
