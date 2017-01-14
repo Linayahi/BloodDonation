@@ -25,7 +25,7 @@
         android:id="@+id/scrollView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/aff_photo">
+        android:layout_below="@+id/photo">
 
         <LinearLayout
             android:id="@+id/linearLayout"
