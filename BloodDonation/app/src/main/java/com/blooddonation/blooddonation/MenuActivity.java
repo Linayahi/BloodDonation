@@ -22,7 +22,7 @@ public class MenuActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     SharedPreferences sharedPreferences;
-    String email,prenom,nom;
+    String email,prenom,nom, photo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,10 +44,11 @@ public class MenuActivity extends AppCompatActivity
         email = GetString("email");
         prenom = GetString("prenom");
         nom = GetString("nom");
-
+        photo = GetString("photo");
                                Log.i("email", email);
                         Log.i("nom", prenom);
                         Log.i("prenom", nom);
+        Log.i("email", photo);
 
         View header = navigationView.getHeaderView(0);
         TextView username = (TextView) header.findViewById(R.id.username);

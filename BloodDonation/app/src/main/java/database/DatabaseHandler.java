@@ -37,11 +37,12 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         addLieux();
     }
 
+
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         //db.execSQL(UserDAO.USER_TABLE_DROP);
         //db.execSQL(LieuDAO.LIEU_TABLE_DROP);
-       // db.execSQL(EventDAO.EVENT_TABLE_DROP);
+        //db.execSQL(EventDAO.EVENT_TABLE_DROP);
        // onCreate(db);
 
         switch(oldVersion)

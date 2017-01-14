@@ -26,7 +26,7 @@ public class UserDAO {
     public static final String USER_SEXE = "sexe";
     public static final String USER_EMAIL = "email";
     public static final String USER_PASSWORD = "password";
-    public static final byte[] USER_IMAGE = null;
+    public static final String USER_PHOTO = "photo";
 
     public static final String USER_TABLE_NAME = "User";
     public static final String USER_TABLE_CREATE =
@@ -38,7 +38,7 @@ public class UserDAO {
                     USER_SEXE+ " TEXT, " +
                     USER_EMAIL+ " TEXT, "  +
                     USER_PASSWORD+ " TEXT, " +
-                    USER_IMAGE+ " BLOB);";
+                    USER_PHOTO+ " TEXT);";
 
     public static final String USER_TABLE_DROP = "DROP TABLE IF EXISTS " + USER_TABLE_NAME + ";";
 
@@ -71,12 +71,18 @@ public class UserDAO {
         value.put(UserDAO.USER_SEXE, u.getSexe());
         value.put(UserDAO.USER_EMAIL, u.getEmail());
         value.put(UserDAO.USER_PASSWORD, u.getPassword());
-        value.put(String.valueOf(UserDAO.USER_IMAGE),u.getImage());
+        value.put(UserDAO.USER_PHOTO,u.getPhoto());
         return db.insert(UserDAO.USER_TABLE_NAME,null,value);
 
     }
 
-
+//Ajoute une image à l'utilisateur
+    public long AddPhoto(String email, String photo)
+    {
+        ContentValues value = new ContentValues();
+        value.put(UserDAO.USER_PHOTO,photo);
+        return db.update(UserDAO.USER_TABLE_NAME,value,"email='"+email+"'",null);
+    }
   /*  public boolean getUserbyEmail(String email, String password) {
         Cursor cursor = db.rawQuery("select * from " + USER_TABLE_NAME + " where " + USER_EMAIL + " = ? AND " + USER_PASSWORD + "= ?", new String[]{email, password});
         if (cursor.getCount() > 0) {
@@ -102,7 +108,7 @@ public class UserDAO {
             user.setSexe(cursor.getString(4));
             user.setEmail(cursor.getString(5));
             user.setPassword(cursor.getString(6));
-
+            user.setPhoto(cursor.getString(7));
             return user;
         }
         else
@@ -141,7 +147,7 @@ public class UserDAO {
                 lieu.setSexe(cursor.getString(4));
                 lieu.setEmail(cursor.getString(5));
                 lieu.setPassword(cursor.getString(6));
-                lieu.setImage(cursor.getBlob(7));
+                lieu.setPhoto(cursor.getString(7));
 
                 lieuList.add(lieu);
             } while (cursor.moveToNext());
