@@ -1,13 +1,16 @@
 package com.blooddonation.blooddonation;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Environment;
+import android.preference.PreferenceManager;
 import android.provider.MediaStore;
 import android.support.v4.content.FileProvider;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -20,31 +23,55 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import dao.UserDAO;
+
 
 public class ScanActivity extends AppCompatActivity {
+
+    SharedPreferences sharedPreferences;
+    String photo,email;
+
     static final int REQUEST_IMAGE_CAPTURE = 1;
     static final int REQUEST_TAKE_PHOTO = 1;
-    private static final String CAPTURE_IMAGE_FILE_PROVIDER = "com.blooddonation.blooddonation.android.fileprovider";
-    private ImageView mImageView;
+    private ImageView mImageView1;
+    private ImageView mImageView2;
+
+
     private LinearLayout linearLayout;
-    private Button photo;
-    String mCurrentPhotoPath;
+    private Button but_photo;
     Uri contentUri;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_scan);
-        mImageView = new ImageView(this);
+        mImageView1 = new ImageView(this);
+        mImageView2 = new ImageView(this);
         linearLayout = (LinearLayout) findViewById(R.id.linearLayout);
-        photo = (Button) findViewById(R.id.photo);
+        but_photo = (Button) findViewById(R.id.photo);
 
-        photo.setOnClickListener(new View.OnClickListener() {
+        but_photo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 dispatchTakePictureIntent();
             }
         });
-
+       // photo = GetString("photo");
+        //Log.i("photo", photo);
+        if(GetString("photo") !="")
+        {
+            File file = new File(GetString("photo"));
+            mImageView2.setImageURI(Uri.fromFile(file));
+            linearLayout.addView(mImageView2);
+            mImageView2.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent();
+                    intent.setAction(Intent.ACTION_VIEW);
+                    intent.setDataAndType(contentUri, "image/*");
+                    startActivityForResult(intent, 10);
+                }
+            });
+        }
     }
 
     private File createImageFile() throws IOException {
@@ -59,7 +86,8 @@ public class ScanActivity extends AppCompatActivity {
         );
 
         // Save a file: path for use with ACTION_VIEW intents
-        mCurrentPhotoPath = image.getAbsolutePath();
+        photo = image.getAbsolutePath();
+
         return image;
     }
     private void dispatchTakePictureIntent() {
@@ -70,6 +98,11 @@ public class ScanActivity extends AppCompatActivity {
             File photoFile = null;
             try {
                     photoFile = createImageFile();
+                email = GetString("email");
+                UserDAO u = new UserDAO(getApplicationContext());
+                u.open();
+                if(u!=null)
+                 u.AddPhoto(email, photo);
             } catch (IOException ex) {
                 // Error occurred while creating the File
             }
@@ -92,10 +125,10 @@ public class ScanActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
-            File file = new File(mCurrentPhotoPath);
-            mImageView.setImageURI(Uri.fromFile(file));
-            linearLayout.addView(mImageView);
-            mImageView.setOnClickListener(new View.OnClickListener() {
+            File file = new File(photo);
+            mImageView1.setImageURI(Uri.fromFile(file));
+            linearLayout.addView(mImageView1);
+            mImageView1.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     Intent intent = new Intent();
@@ -118,5 +151,9 @@ public class ScanActivity extends AppCompatActivity {
 //            });
         }
     }
-
+    public String GetString(String key)
+    {
+        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        return sharedPreferences.getString(key, "");
+    }
 }

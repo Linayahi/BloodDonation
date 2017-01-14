@@ -13,14 +13,14 @@ public class User {
     private String sexe;
     private String email;
     private String password;
-    private byte[] image;
+    private String photo;
 
-    public byte[] getImage() {
-        return image;
+    public String getPhoto() {
+        return photo;
     }
 
-    public void setImage(byte[] image) {
-        this.image = image;
+    public void setPhoto(String photo) {
+        this.photo = photo;
     }
 
     public User(String nom, String prenom, int age, String sexe, String email, String password) {
@@ -30,6 +30,7 @@ public class User {
         this.sexe = sexe;
         this.email = email;
         this.password = password;
+        this.photo = "";
     }
 
     public User() {
