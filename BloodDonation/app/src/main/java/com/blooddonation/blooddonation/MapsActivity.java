@@ -306,6 +306,9 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                     mMap.addMarker(new MarkerOptions()
                             .position(position)
                             .title(result.get(i).get(LieuDAO.LIEU_NOM))
+                            .icon(BitmapDescriptorFactory.fromResource(R.drawable.drop))
+
+
                     );
                 }
 
@@ -376,4 +379,8 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
     return true;
 }
+
+
+
+
 }

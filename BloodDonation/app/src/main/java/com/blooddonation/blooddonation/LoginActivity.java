@@ -1,8 +1,13 @@
 package com.blooddonation.blooddonation;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.Html;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -17,10 +22,16 @@ public class LoginActivity extends AppCompatActivity {
     private EditText email;
     private EditText password;
 
+    SharedPreferences sharedPreferences;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
+        ActionBar actionBar=getSupportActionBar();
+        actionBar.show();
+        actionBar.setTitle(Html.fromHtml("<font color=\"white\">" + "Connexion" + "</font>"));
 
         email=(EditText) findViewById(R.id.email);
         password=(EditText) findViewById(R.id.password);
@@ -40,14 +51,14 @@ public class LoginActivity extends AppCompatActivity {
                 {
                     UserDAO userdao = new UserDAO(getApplicationContext());
                     userdao.open();
-                    if (userdao.getUserbyEmail(message_email, message_mdp))
+                    User user = userdao.getUserbyEmail(message_email, message_mdp);
+                    if (user!=null)
                     {
-                        Toast.makeText(getBaseContext(), "OK", Toast.LENGTH_SHORT).show();
-                        //Intent intent = new Intent(LoginActivity.this,MapsActivity.class);
-                        //Intent intent = new Intent(LoginActivity.this,EventActivity.class);
+                        SaveString("email", user.getEmail());
+                        SaveString("nom", user.getNom());
+                        SaveString("prenom", user.getPrenom());
+
                         Intent intent = new Intent(LoginActivity.this,MenuActivity.class);
-
-
                         startActivity(intent);
                     }
                     else
@@ -72,5 +83,13 @@ public class LoginActivity extends AppCompatActivity {
 
             }
         });
+    }
+
+    public void SaveString(String key, String value)
+    {
+        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString(key, value);
+        editor.commit();
     }
 }

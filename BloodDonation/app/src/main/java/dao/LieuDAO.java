@@ -96,7 +96,7 @@ public class LieuDAO {
     public LieuDon getLieuByName(String nom)
     {
         Cursor cursor = db.rawQuery("select * from " + LIEU_TABLE_NAME + " where "+LIEU_NOM+" = ? " , new String[]{nom});
-        if(cursor!=null)
+        if(cursor.getCount() > 0)
         {
             cursor.moveToFirst();
             LieuDon lieu = new LieuDon();

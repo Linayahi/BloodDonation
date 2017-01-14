@@ -1,8 +1,10 @@
 package com.blooddonation.blooddonation;
 
 import android.content.Intent;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.Html;
 import android.text.InputType;
 import android.util.Log;
 import android.view.View;
@@ -44,8 +46,6 @@ public class RegisterActivity extends AppCompatActivity {
         setContentView(R.layout.activity_register);
 
 
-
-
         nom = (EditText) findViewById(R.id.nom);
         prenom = (EditText) findViewById(R.id.prenom);
         age = (EditText) findViewById(R.id.age);
@@ -59,20 +59,6 @@ public class RegisterActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-
-//                Log.i("Starting: ", "Starting..");
-//                LieuDAO lieudao = new LieuDAO(getApplicationContext());
-//                Log.i("Opening: ", "Opening..");
-//                lieudao.open();
-//                // Reading all contacts
-//                 Log.i("Reading: ", "Reading all rows..");
-//                 lieux = lieudao.getAllLieux();
-//
-//                for (LieuDon l : lieux) {
-//                    String log = "Id: " + l.getId() + "Nom: " + l.getNom() + " ,Adresse: " + l.getAdresse() +" ,Latitude: " + l.getLatitude() + ", Logintude: "+ l.getLongitude()+ " , Description : "+ l.getDesc();
-//                    Log.i("Lieu: ", log);
-//                }
-//                lieudao.close();
 
                 String message_nom = nom.getText().toString();
                 String message_prenom = prenom.getText().toString();
@@ -96,35 +82,46 @@ public class RegisterActivity extends AppCompatActivity {
                     }
                     else
                     {
-                        if (!isValidPassword(message_mdp))
+                        UserDAO userdao2 = new UserDAO(getApplicationContext());
+                        userdao2.open();
+                        if (userdao2.getUserbyEmail2(message_email))
                         {
-                            Toast.makeText(getBaseContext(), "Mot de passe trop court, veuillez entrer un mot de passe de longueur supérieur à 7 !", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getBaseContext(), "Cet adresse email est déjà attribuée !", Toast.LENGTH_SHORT).show();
+                            userdao2.close();
                         }
-
                         else
                         {
-                            User u = new User(message_nom,
-                               message_prenom,
-                               Integer.parseInt(message_age),
-                               message_sexe,
-                               message_email,
-                               message_mdp);
-
-                            UserDAO userdao = new UserDAO(getApplicationContext());
-                            userdao.open();
-                            Long resultat = userdao.addUser(u);
-                            if (resultat>0)
+                            userdao2.close();
+                            if (!isValidPassword(message_mdp))
                             {
-                                Toast.makeText(getBaseContext(), "Félcitations! Votre compte vient d'être créé", Toast.LENGTH_SHORT).show();
-                                Intent intent = new Intent(RegisterActivity.this,LoginActivity.class);
-                                startActivity(intent);
+                                Toast.makeText(getBaseContext(), "Mot de passe trop court, veuillez entrer un mot de passe de longueur supérieur à 7 !", Toast.LENGTH_SHORT).show();
                             }
 
-                            Log.i("résultat ",String.valueOf(userdao.addUser(u)));
+                            else
+                            {
+                                User u = new User(message_nom,
+                                        message_prenom,
+                                        Integer.parseInt(message_age),
+                                        message_sexe,
+                                        message_email,
+                                        message_mdp);
 
-                            userdao.close();
+                                UserDAO userdao = new UserDAO(getApplicationContext());
+                                userdao.open();
+                                Long resultat = userdao.addUser(u);
+                                if (resultat>0)
+                                {
+                                    Toast.makeText(getBaseContext(), "Félcitations! Votre compte vient d'être créé", Toast.LENGTH_SHORT).show();
+                                    Intent intent = new Intent(RegisterActivity.this,LoginActivity.class);
+                                    startActivity(intent);
+                                }
+
+                                Log.i("résultat ",String.valueOf(userdao.addUser(u)));
+
+                                userdao.close();
 
 
+                            }
                         }
                    }
                 }

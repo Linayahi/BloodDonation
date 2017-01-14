@@ -4,6 +4,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -72,16 +73,47 @@ public class UserDAO {
     }
 
 
-    public boolean getUserbyEmail(String email, String password)
-    {
-        Cursor cursor = db.rawQuery("select * from " + USER_TABLE_NAME + " where "+USER_EMAIL+" = ? AND " + USER_PASSWORD + "= ?", new String[]{email,password});
-        if(cursor.getCount()>0)
-        {
+  /*  public boolean getUserbyEmail(String email, String password) {
+        Cursor cursor = db.rawQuery("select * from " + USER_TABLE_NAME + " where " + USER_EMAIL + " = ? AND " + USER_PASSWORD + "= ?", new String[]{email, password});
+        if (cursor.getCount() > 0) {
             cursor.close();
             return true;
+        } else {
+            cursor.close();
+            return false;
+        }
+    }*/
+
+    public User getUserbyEmail(String email, String password) {
+
+      Cursor cursor = db.rawQuery("select * from " + USER_TABLE_NAME + " where "+USER_EMAIL+" = ? AND " + USER_PASSWORD + "= ?", new String[]{email,password});
+        if(cursor.getCount() > 0)
+        {
+            cursor.moveToFirst();
+            User user = new User();
+            user.setId(Integer.parseInt(cursor.getString(0)));
+            user.setNom(cursor.getString(1));
+            user.setPrenom(cursor.getString(2));
+            user.setAge(Integer.parseInt(cursor.getString(3)));
+            user.setSexe(cursor.getString(4));
+            user.setEmail(cursor.getString(5));
+            user.setPassword(cursor.getString(6));
+
+            return user;
         }
         else
         {
+            cursor.close();
+            return null;
+        }
+    }
+
+    public boolean getUserbyEmail2(String email) {
+        Cursor cursor = db.rawQuery("select * from " + USER_TABLE_NAME + " where " + USER_EMAIL + " = ?  ", new String[]{email});
+        if (cursor.getCount() > 0) {
+            cursor.close();
+            return true;
+        } else {
             cursor.close();
             return false;
         }

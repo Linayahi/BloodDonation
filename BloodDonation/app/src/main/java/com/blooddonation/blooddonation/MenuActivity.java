@@ -1,9 +1,12 @@
 package com.blooddonation.blooddonation;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -13,9 +16,13 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TextView;
 
 public class MenuActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+
+    SharedPreferences sharedPreferences;
+    String email,prenom,nom;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +40,22 @@ public class MenuActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        email = GetString("email");
+        prenom = GetString("prenom");
+        nom = GetString("nom");
+
+                               Log.i("email", email);
+                        Log.i("nom", prenom);
+                        Log.i("prenom", nom);
+
+        View header = navigationView.getHeaderView(0);
+        TextView username = (TextView) header.findViewById(R.id.username);
+        TextView mail = (TextView) header.findViewById(R.id.email);
+        username.setText(prenom.concat(" ").concat(nom));
+        mail.setText(email);
+
+
     }
 
     @Override
@@ -96,4 +119,11 @@ public class MenuActivity extends AppCompatActivity
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
+
+    public String GetString(String key)
+    {
+        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        return sharedPreferences.getString(key, "");
+    }
+
 }
