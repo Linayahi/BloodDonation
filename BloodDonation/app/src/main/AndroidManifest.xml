@@ -46,12 +46,15 @@
 
         <activity
             android:name=".MapsActivity"
-            android:label="Centres à proximité" />
+            android:label="@string/title_activity_maps" />
         <activity android:name=".EventActivity" />
+        <activity android:name=".QuizActivity" />
+        
         <activity
             android:name=".MenuActivity"
             android:label="Accueil"
             android:theme="@style/AppTheme.NoActionBar"></activity>
+
     </application>
 
 </manifest>

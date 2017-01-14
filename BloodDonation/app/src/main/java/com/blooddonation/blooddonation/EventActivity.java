@@ -23,7 +23,7 @@ public class EventActivity extends AppCompatActivity {
         event.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // launches the calendar then adds an event to it
+                // launches the calendar to add an event to it
 
                 Calendar cal = Calendar.getInstance();
                 Intent intent = new Intent(Intent.ACTION_EDIT);
@@ -35,21 +35,10 @@ public class EventActivity extends AppCompatActivity {
                 intent.putExtra("title", "Don de sang");
                 startActivity(intent);
 
-                //save the event in the database
-
-                //Event e = new Event(user_id,cal.getTimeInMillis(), lieu); //how to get the user's id ???
             }
         });
 
-        Button aff_event = (Button) findViewById(R.id.aff_event);
 
-        aff_event.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //get all the events from the database
-
-            }
-        });
 
     }
 }
