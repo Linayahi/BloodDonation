@@ -1,5 +1,7 @@
 package metier;
 
+import java.io.ByteArrayInputStream;
+
 /**
  * Created by lina on 13/12/16.
  */
@@ -11,11 +13,21 @@ public class User {
     private String sexe;
     private String email;
     private String password;
+    private byte[] image;
+
+    public byte[] getImage() {
+        return image;
+    }
+
+    public void setImage(byte[] image) {
+        this.image = image;
+    }
 
     public User(String nom, String prenom, int age, String sexe, String email, String password) {
         this.nom = nom;
         this.prenom = prenom;
         this.age = age;
+
         this.sexe = sexe;
         this.email = email;
         this.password = password;
