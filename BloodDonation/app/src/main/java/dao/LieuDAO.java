@@ -14,6 +14,8 @@ import metier.LieuDon;
 
 /**
  * Created by lina on 13/12/16.
+ * Cette classe contient les méthodes qui permettent de gérer la table LieuDon
+ *
  */
 public class LieuDAO {
     public static final String LIEU_ID = "lieu_id";
@@ -55,6 +57,11 @@ public class LieuDAO {
     }
 
 
+    /**
+     * Cette fonction prend en entrée un LieuDon et l'insère en BD
+     * @param lieu
+     * @return l'id du lieu crée
+     */
     public long addLieu(LieuDon lieu)
     {
         ContentValues value = new ContentValues();
@@ -67,7 +74,10 @@ public class LieuDAO {
        return db.insert(LieuDAO.LIEU_TABLE_NAME, null, value);
     }
 
-    // Getting all rows
+    /**
+     * Cette fonction permet de récupérer la liste de tous les LieuDon
+     * @return
+     */
     public List<LieuDon> getAllLieux() {
         List<LieuDon> lieuList = new ArrayList<LieuDon>();
         // Select All Query
@@ -93,6 +103,11 @@ public class LieuDAO {
     }
 
 
+    /**
+     * Cette fonction récupère les détails d'un LieuDon à partir de son nom
+     * @param nom
+     * @return
+     */
     public LieuDon getLieuByName(String nom)
     {
         Cursor cursor = db.rawQuery("select * from " + LIEU_TABLE_NAME + " where "+LIEU_NOM+" = ? " , new String[]{nom});

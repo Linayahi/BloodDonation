@@ -5,7 +5,6 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-import dao.EventDAO;
 import dao.LieuDAO;
 import dao.UserDAO;
 import metier.LieuDon;
@@ -33,17 +32,12 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         dbase=db;
         db.execSQL(UserDAO.USER_TABLE_CREATE);
         db.execSQL(LieuDAO.LIEU_TABLE_CREATE);
-        db.execSQL(EventDAO.EVENT_TABLE_CREATE);
         addLieux();
     }
 
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        //db.execSQL(UserDAO.USER_TABLE_DROP);
-        //db.execSQL(LieuDAO.LIEU_TABLE_DROP);
-        //db.execSQL(EventDAO.EVENT_TABLE_DROP);
-       // onCreate(db);
 
         switch(oldVersion)
         {
@@ -56,6 +50,9 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         }
     }
 
+    /**
+     * Remplir la base de données avec des LieuDon
+     */
     public void addLieux(){
 
         LieuDon l1=new LieuDon("Hôpital Pitié-Salpétrière","12 rue Bruant Ou 47 Bd Hôpital - Pavillon Laveran 75013 Paris",48.8399391,2.3617921,"du lundi au samedi de 9h à 15h30");
@@ -102,6 +99,10 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
     }
 
+    /**
+     * Cette fonction permet d'ajouter un LieuDon passé en paramètre
+     * @param lieu
+     */
     public void addLieu(LieuDon lieu)
     {
         ContentValues value = new ContentValues();

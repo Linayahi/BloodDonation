@@ -53,20 +53,19 @@ public class LoginActivity extends AppCompatActivity {
                     UserDAO userdao = new UserDAO(getApplicationContext());
                     userdao.open();
                     User user = userdao.getUserbyEmail(message_email, message_mdp);
+                    //Email et mot de passe bon
                     if (user!=null)
                     {
+                        //Enregistrer les valeurs dans Shared Preferences
                         SaveString("email", user.getEmail());
                         SaveString("nom", user.getNom());
                         SaveString("prenom", user.getPrenom());
                         SaveString("photo", user.getPhoto());
 
-                        Log.i("email", user.getEmail());
-                        Log.i("nom", user.getNom());
-                        Log.i("prenom", user.getPrenom());
-
                         Intent intent = new Intent(LoginActivity.this,MenuActivity.class);
                         startActivity(intent);
                     }
+                    //Email ou mot de passe incorrect
                     else
                     {
                         Toast.makeText(getBaseContext(), "Email ou mot de pase incorrect", Toast.LENGTH_SHORT).show();
