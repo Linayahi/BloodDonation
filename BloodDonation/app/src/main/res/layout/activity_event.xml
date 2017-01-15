@@ -17,6 +17,7 @@
         android:id="@+id/event"
         android:layout_centerHorizontal="true"
         android:textAllCaps="false"
+        android:background="@color/colorRed"
         android:text="Ajouter un événement"/>
 
 

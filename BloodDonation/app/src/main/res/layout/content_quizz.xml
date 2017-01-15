@@ -338,7 +338,7 @@
                 android:textAllCaps="false"
                 android:text="Résultat"
                 android:textColor="@color/colorWhite"
-                android:background="@color/colorGrey"
+                android:background="@color/colorRed"
                 android:textStyle="bold"
                 android:layout_below="@+id/text"
                 />

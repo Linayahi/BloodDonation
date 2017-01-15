@@ -90,7 +90,7 @@
         android:layout_centerHorizontal="true"
         android:textAllCaps="false"
         android:textColor="@color/colorWhite"
-        android:background="@color/colorGrey"
+        android:background="@color/colorRed"
         android:textStyle="bold"
         android:layout_marginTop="40dip"
         android:text="S'inscrire"/>

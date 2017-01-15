@@ -79,8 +79,6 @@
             android:label="A proximité"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".ScanActivity" />
-        <activity android:name=".GroupageActivity" />
-
         <activity android:name=".AccueilActivity"></activity>
 
         <activity
