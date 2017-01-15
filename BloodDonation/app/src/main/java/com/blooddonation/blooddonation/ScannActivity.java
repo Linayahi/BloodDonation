@@ -38,9 +38,7 @@ public class ScannActivity extends AppCompatActivity
 
     static final int REQUEST_IMAGE_CAPTURE = 1;
     static final int REQUEST_TAKE_PHOTO = 1;
-    private ImageView mImageView1;
-    private ImageView mImageView2;
-
+    private ImageView mImageView;
 
     private LinearLayout linearLayout;
     private Button but_photo;
@@ -73,8 +71,7 @@ public class ScannActivity extends AppCompatActivity
         username.setText(prenom.concat(" ").concat(nom));
         mail.setText(email);
 
-        mImageView1 = new ImageView(this);
-        mImageView2 = new ImageView(this);
+        mImageView = new ImageView(this);
         linearLayout = (LinearLayout) findViewById(R.id.linearLayout);
         but_photo = (Button) findViewById(R.id.photo);
 
@@ -86,20 +83,21 @@ public class ScannActivity extends AppCompatActivity
         });
         // photo = GetString("photo");
         //Log.i("photo", photo);
+        linearLayout.addView(mImageView);
+
+        mImageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent();
+                intent.setAction(Intent.ACTION_VIEW);
+                intent.setDataAndType(contentUri, "image/*");
+                startActivityForResult(intent, 10);
+            }
+        });
         if(GetString("photo") !="")
         {
             File file = new File(GetString("photo"));
-            mImageView2.setImageURI(Uri.fromFile(file));
-            linearLayout.addView(mImageView2);
-            mImageView2.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    Intent intent = new Intent();
-                    intent.setAction(Intent.ACTION_VIEW);
-                    intent.setDataAndType(contentUri, "image/*");
-                    startActivityForResult(intent, 10);
-                }
-            });
+            mImageView.setImageURI(Uri.fromFile(file));
         }
     }
 
@@ -214,29 +212,7 @@ public class ScannActivity extends AppCompatActivity
         if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
             File file = new File(photo);
             saveString("photo",photo);
-            mImageView1.setImageURI(Uri.fromFile(file));
-            linearLayout.addView(mImageView1);
-            mImageView1.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    Intent intent = new Intent();
-                    intent.setAction(Intent.ACTION_VIEW);
-                    intent.setDataAndType(contentUri, "image/*");
-                    startActivityForResult(intent, 10);
-                }
-            });
-
-//            for(int i=0 ; i<images.size() ; i++)
-//            {
-//                linearLayout.addView(images.get(i));
-//            }
-//
-//            mImageView.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View view) {
-//                    //ouvrir l'image avec le visionneur
-//                }
-//            });
+            mImageView.setImageURI(Uri.fromFile(file));
         }
     }
 
