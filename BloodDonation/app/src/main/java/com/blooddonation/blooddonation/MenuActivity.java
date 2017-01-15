@@ -98,6 +98,7 @@ public class MenuActivity extends AppCompatActivity
         nom = GetString("nom");
         photo = GetString("photo");
 
+        //Remplir les informations du header de navigationView
         View header = navigationView.getHeaderView(0);
         TextView username = (TextView) header.findViewById(R.id.username);
         TextView mail = (TextView) header.findViewById(R.id.email);
@@ -116,33 +117,11 @@ public class MenuActivity extends AppCompatActivity
             super.onBackPressed();
         }
     }
-//
-//    @Override
-//    public boolean onCreateOptionsMenu(Menu menu) {
-//        // Inflate the menu; this adds items to the action bar if it is present.
-//        getMenuInflater().inflate(R.menu.menu, menu);
-//        return true;
-//    }
 
-//    @Override
-//    public boolean onOptionsItemSelected(MenuItem item) {
-//        // Handle action bar item clicks here. The action bar will
-//        // automatically handle clicks on the Home/Up button, so long
-//        // as you specify a parent activity in AndroidManifest.xml.
-//        int id = item.getItemId();
-//
-//        //noinspection SimplifiableIfStatement
-//        if (id == R.id.action_settings) {
-//            return true;
-//        }
-//
-//        return super.onOptionsItemSelected(item);
-//    }
 
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
-        // Handle navigation view item clicks here.
         int id = item.getItemId();
 
         if (id == R.id.nav_profil)
@@ -185,15 +164,6 @@ public class MenuActivity extends AppCompatActivity
         return sharedPreferences.getString(key, "");
     }
 
-    /**
-     * Manipulates the map once available.
-     * This callback is triggered when the map is ready to be used.
-     * This is where we can add markers or lines, add listeners or move the camera. In this case,
-     * we just add a marker near Sydney, Australia.
-     * If Google Play services is not installed on the device, the user will be prompted to install
-     * it inside the SupportMapFragment. This method will only be triggered once the user has
-     * installed Google Play services and returned to the app.
-     */
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
@@ -216,6 +186,7 @@ public class MenuActivity extends AppCompatActivity
 
         Log.i("starting","starting1");
 
+        //Afficher la liste des lieux
         new GetLieux().execute();
     }
 
@@ -356,8 +327,6 @@ public class MenuActivity extends AppCompatActivity
         @Override
         protected void onPreExecute()
         {
-            Log.i("starting","starting2");
-
             super.onPreExecute();
             pDialog = new ProgressDialog(MenuActivity.this);
             pDialog.setMessage("Chargement ...");
@@ -369,8 +338,6 @@ public class MenuActivity extends AppCompatActivity
         @Override
         protected ArrayList<HashMap<String,String>> doInBackground(String... args)
         {
-            Log.i("starting","starting3");
-
             LieuDAO lieudao = new LieuDAO(getApplicationContext());
             lieudao.open();
             List<LieuDon> lieux = lieudao.getAllLieux();
@@ -450,6 +417,7 @@ public class MenuActivity extends AppCompatActivity
             final TextView latituded = (TextView) dialog.findViewById(R.id.latituded);
             final TextView longituded = (TextView) dialog.findViewById(R.id.longituded);
 
+            //Récupérer les informations sur le lieu
             LieuDAO lieudao = new LieuDAO(getApplicationContext());
             lieudao.open();
             LieuDon lieu = lieudao.getLieuByName(marker.getTitle());
@@ -466,6 +434,7 @@ public class MenuActivity extends AppCompatActivity
             btn_event.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    //Ajouter un évènement
                     Calendar cal = Calendar.getInstance();
                     Intent intent = new Intent(Intent.ACTION_EDIT);
                     intent.setType("vnd.android.cursor.item/event");
@@ -474,7 +443,6 @@ public class MenuActivity extends AppCompatActivity
                     intent.putExtra("rrule", "FREQ=YEARLY");
                     intent.putExtra("endTime", cal.getTimeInMillis()+60*60*1000);
                     intent.putExtra("title", "Don de sang");
-                    //pour l'ajout du lieu de l'event ;)
                     intent.putExtra("eventLocation",adressed.getText());
                     startActivity(intent);
 
@@ -488,6 +456,7 @@ public class MenuActivity extends AppCompatActivity
                 @Override
                 public void onClick(View v)
                 {
+                    //Lancer l'itinéraire avec Google Maps
                     dialog.dismiss();
                     Uri gmmIntentUri = Uri.parse("google.navigation:q="+latituded.getText().toString()+","+longituded.getText().toString());
                     Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);

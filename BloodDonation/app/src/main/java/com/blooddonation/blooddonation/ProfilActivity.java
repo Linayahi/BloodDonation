@@ -46,7 +46,6 @@ public class ProfilActivity extends AppCompatActivity
     private RadioButton radioSexButton;
     private EditText email;
     private EditText password;
-    //private TextView userid;
 
     User user;
 
@@ -89,7 +88,6 @@ public class ProfilActivity extends AppCompatActivity
         sexe = (RadioGroup) findViewById(R.id.radioSex);
         email = (EditText) findViewById(R.id.email);
         password = (EditText) findViewById(R.id.password);
-        //userid=(TextView) findViewById(R.id.userid);
 
         UserDAO userdao = new UserDAO(getApplicationContext());
         userdao.open();
@@ -102,7 +100,6 @@ public class ProfilActivity extends AppCompatActivity
             age.setText(String.valueOf(user.getAge()));
             email.setText(user.getEmail());
             password.setText(user.getPassword());
-            //userid.setText(String.valueOf(user.getId()));
 
             if (user.getSexe().equals("Masculin")) {
                 radioSexButton = (RadioButton) findViewById(R.id.radioButton);
@@ -126,6 +123,7 @@ public class ProfilActivity extends AppCompatActivity
                         .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
 
+                                //Suppression de l'utilisateur
                                 UserDAO userdao = new UserDAO(getApplicationContext());
                                 userdao.open();
                                 userdao.deleteUser(user);

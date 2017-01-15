@@ -67,6 +67,7 @@ public class RegisterActivity extends AppCompatActivity {
                 radioSexButton = (RadioButton) findViewById(selectedId);
                 String message_sexe= radioSexButton.getText().toString();
 
+                //Vérifie que tous les champs sont remplis
                 if (message_nom.equals("")||message_prenom.equals("") ||message_age.equals("")||message_email.equals("")||message_mdp.equals(""))
                 {
                     Toast.makeText(getBaseContext(), "Un ou plusieurs champs obligatoires vides", Toast.LENGTH_SHORT).show();
@@ -74,12 +75,14 @@ public class RegisterActivity extends AppCompatActivity {
 
                else
                 {
+                    //Vérifie que l'email est au bon format
                     if (!isValidEmail(message_email))
                     {
                         Toast.makeText(getBaseContext(), "Email invalide", Toast.LENGTH_SHORT).show();
                     }
                     else
                     {
+                        //Vérifie que l'email n'existe pas déjà
                         UserDAO userdao2 = new UserDAO(getApplicationContext());
                         userdao2.open();
                         if (userdao2.getUserbyEmail2(message_email))
@@ -90,6 +93,7 @@ public class RegisterActivity extends AppCompatActivity {
                         else
                         {
                             userdao2.close();
+                            //Vérifie que le mot de passe est assez long
                             if (!isValidPassword(message_mdp))
                             {
                                 Toast.makeText(getBaseContext(), "Mot de passe trop court, veuillez entrer un mot de passe de longueur supérieur à 7 !", Toast.LENGTH_SHORT).show();
@@ -97,6 +101,7 @@ public class RegisterActivity extends AppCompatActivity {
 
                             else
                             {
+                                //Ajouter l'utilisateur
                                 User u = new User(message_nom,
                                         message_prenom,
                                         Integer.parseInt(message_age),
@@ -113,8 +118,6 @@ public class RegisterActivity extends AppCompatActivity {
                                     Intent intent = new Intent(RegisterActivity.this,LoginActivity.class);
                                     startActivity(intent);
                                 }
-
-                                Log.i("résultat ",String.valueOf(resultat));
 
                                 userdao.close();
 
