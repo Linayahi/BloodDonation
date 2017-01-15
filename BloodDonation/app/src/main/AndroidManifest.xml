@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.blooddonation.blooddonation" >
+    package="com.blooddonation.blooddonation">
 
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
@@ -31,11 +31,10 @@
         android:name="android.support.v4.content.FileProvider"
         android:authorities="com.blooddonation.blooddonation.android.fileprovider"
         android:exported="false"
-        android:grantUriPermissions="true" >
+        android:grantUriPermissions="true">
         <meta-data
             android:name="android.support.FILE_PROVIDER_PATHS"
-
-            android:resource="@xml/file_paths"></meta-data>
+            android:resource="@xml/file_paths" />
     </provider>
 
     <application
@@ -43,10 +42,8 @@
         android:icon="@drawable/sang"
         android:label="@string/app_name"
         android:supportsRtl="true"
-
         android:theme="@style/AppTheme">
         <activity android:name=".LoginActivity">
-
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -77,14 +74,15 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".ScanActivity" />
         <activity android:name=".GroupageActivity" />
-
-        <activity android:name=".AccueilActivity"></activity>
-
+        <activity android:name=".AccueilActivity" />
         <activity
             android:name=".QuizzActivity"
             android:label="Quizz"
-            android:theme="@style/AppTheme.NoActionBar" >
-        </activity>
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity
+            android:name=".ScannActivity"
+            android:label="@string/title_activity_scann"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>
