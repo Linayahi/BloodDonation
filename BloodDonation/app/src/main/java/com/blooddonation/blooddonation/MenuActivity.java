@@ -147,6 +147,8 @@ public class MenuActivity extends AppCompatActivity
 
         if (id == R.id.nav_profil)
         {
+            Intent i = new Intent(MenuActivity.this, ProfilActivity.class);
+            startActivity(i);
         }
         else if (id == R.id.nav_map)
         {

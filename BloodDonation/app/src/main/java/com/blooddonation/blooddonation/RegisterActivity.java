@@ -38,8 +38,6 @@ public class RegisterActivity extends AppCompatActivity {
                     + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$"
     );
 
-    List<LieuDon> lieux;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

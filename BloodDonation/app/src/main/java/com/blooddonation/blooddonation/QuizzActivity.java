@@ -266,6 +266,8 @@ public class QuizzActivity extends AppCompatActivity
 
             if (id == R.id.nav_profil)
             {
+                Intent i = new Intent(QuizzActivity.this, ProfilActivity.class);
+                startActivity(i);
             }
             else if (id == R.id.nav_map)
             {

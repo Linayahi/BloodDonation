@@ -83,16 +83,6 @@ public class UserDAO {
         value.put(UserDAO.USER_PHOTO,photo);
         return db.update(UserDAO.USER_TABLE_NAME,value,"email='"+email+"'",null);
     }
-  /*  public boolean getUserbyEmail(String email, String password) {
-        Cursor cursor = db.rawQuery("select * from " + USER_TABLE_NAME + " where " + USER_EMAIL + " = ? AND " + USER_PASSWORD + "= ?", new String[]{email, password});
-        if (cursor.getCount() > 0) {
-            cursor.close();
-            return true;
-        } else {
-            cursor.close();
-            return false;
-        }
-    }*/
 
     public User getUserbyEmail(String email, String password) {
 
@@ -118,6 +108,8 @@ public class UserDAO {
         }
     }
 
+
+
     public boolean getUserbyEmail2(String email) {
         Cursor cursor = db.rawQuery("select * from " + USER_TABLE_NAME + " where " + USER_EMAIL + " = ?  ", new String[]{email});
         if (cursor.getCount() > 0) {
@@ -129,30 +121,56 @@ public class UserDAO {
         }
     }
 
-    public List<User> getAllUsers() {
-        List<User> lieuList = new ArrayList<User>();
-        // Select All Query
-        String selectQuery = "SELECT  * FROM " + USER_TABLE_NAME;
+    public User getUserbyEmail3(String email) {
 
-        Cursor cursor = db.rawQuery(selectQuery, null);
-
-        // looping through all rows and adding to list
-        if (cursor.moveToFirst()) {
-            do {
-                User lieu = new User();
-                lieu.setId(Integer.parseInt(cursor.getString(0)));
-                lieu.setNom(cursor.getString(1));
-                lieu.setPrenom(cursor.getString(2));
-                lieu.setAge(Integer.parseInt(cursor.getString(3)));
-                lieu.setSexe(cursor.getString(4));
-                lieu.setEmail(cursor.getString(5));
-                lieu.setPassword(cursor.getString(6));
-                lieu.setPhoto(cursor.getString(7));
-
-                lieuList.add(lieu);
-            } while (cursor.moveToNext());
+        Cursor cursor = db.rawQuery("select * from " + USER_TABLE_NAME + " where "+USER_EMAIL+" = ?" , new String[]{email});
+        if(cursor.getCount() > 0)
+        {
+            cursor.moveToFirst();
+            User user = new User();
+            user.setId(Integer.parseInt(cursor.getString(0)));
+            user.setNom(cursor.getString(1));
+            user.setPrenom(cursor.getString(2));
+            user.setAge(Integer.parseInt(cursor.getString(3)));
+            user.setSexe(cursor.getString(4));
+            user.setEmail(cursor.getString(5));
+            user.setPassword(cursor.getString(6));
+            user.setPhoto(cursor.getString(7));
+            return user;
         }
+        else
+        {
+            cursor.close();
+            return null;
+        }
+    }
 
-        return lieuList;
+    public void deleteUser(User user) {
+        db.delete(USER_TABLE_NAME, USER_ID + " = ?",
+                new String[] { String.valueOf(user.getId()) });
+    }
+
+    public int updateUser(User u) {
+
+        Log.i("Nom:",u.getNom());
+        Log.i("Prenom:",u.getPrenom());
+        Log.i("Age:",String.valueOf(u.getAge()));
+        Log.i("Sexe:",u.getSexe());
+        Log.i("Email:",u.getEmail());
+        Log.i("Password:",u.getPassword());
+        Log.i("Photo:",u.getPhoto());
+        Log.i("Id:",String.valueOf(u.getId()));
+
+        ContentValues value = new ContentValues();
+        value.put(UserDAO.USER_NOM, u.getNom());
+        value.put(UserDAO.USER_PRENOM, u.getPrenom());
+        value.put(UserDAO.USER_AGE, u.getAge());
+        value.put(UserDAO.USER_SEXE, u.getSexe());
+        value.put(UserDAO.USER_EMAIL, u.getEmail());
+        value.put(UserDAO.USER_PASSWORD, u.getPassword());
+        value.put(UserDAO.USER_PHOTO,u.getPhoto());
+
+        return db.update(USER_TABLE_NAME, value, USER_ID + " = ?",
+                new String[] { String.valueOf(u.getId()) });
     }
 }
