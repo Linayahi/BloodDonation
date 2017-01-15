@@ -72,16 +72,16 @@
             android:name=".MenuActivity"
             android:label="A proximité"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".ScanActivity" />
-        <activity android:name=".GroupageActivity" />
-        <activity android:name=".AccueilActivity" />
+        <activity android:name=".AccueilActivity"
+            android:label="A proximité"/>
+
         <activity
             android:name=".QuizzActivity"
             android:label="Quizz"
             android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity
             android:name=".ScannActivity"
-            android:label="@string/title_activity_scann"
+            android:label="Carte de groupage"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 

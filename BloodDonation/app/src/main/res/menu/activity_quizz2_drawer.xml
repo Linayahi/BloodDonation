@@ -15,13 +15,18 @@
             android:icon="@drawable/image"
             android:title="Ma carte de groupage" />
 
+        <item
+            android:id="@+id/nav_quizz"
+            android:icon="@drawable/quizz"
+            android:title="Quizz" />
+
         <item android:title="Autre"
             android:textStyle="bold" >
             <menu>
                 <item
-                    android:id="@+id/nav_quizz"
-                    android:icon="@drawable/quizz"
-                    android:title="Quizz" />
+                    android:id="@+id/nav_deco"
+                    android:icon="@drawable/logout"
+                    android:title="Déconnexion" />
             </menu>
         </item>
 

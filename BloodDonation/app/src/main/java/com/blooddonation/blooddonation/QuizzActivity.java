@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.text.Html;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -126,110 +127,114 @@ public class QuizzActivity extends AppCompatActivity
                 rb.add((RadioButton) findViewById(selected8)); //v 7
                 rb.add((RadioButton) findViewById(selected9)); // v 8
 
-
-                int right=0;
-                int wrong=0;
-                if(rb.get(0).getText().equals("18"))
+                if(selected1 == -1 && selected2==-1 && selected2==-1 && selected3==-1 &&
+                selected4==-1 && selected5==-1 && selected6==-1 && selected7==-1 &&
+                        selected8==-1 && selected3==-1)
                 {
-                    right++;
+                    text.setText("Vous n'avez coché aucune réponse !");
+                    text.setTextColor(0xffff0000);
                 }
-                else
-                {
-                    wrong ++;
-                    rb.get(0).setTextColor(0xffff0000);
-                }
-
-                if(rb.get(1).getText().equals("50"))
-                {
-                    right++;
-                }
-                else
-                {
-                    wrong ++;
-                    rb.get(1).setTextColor(0xffff0000);
-                }
+                else {
 
 
-                if(rb.get(2).getText().equals("8 semaines")){
-                    right++;
-                }
-                else
-                {
-                    wrong ++;
-                    rb.get(2).setTextColor(0xffff0000);
-                }
+                    int right = 0;
+                    int wrong = 0;
+                    if(selected1 != -1)
+                    {
+                        if (rb.get(0).getText().equals("18")) {
+                            right++;
+                        } else {
+                            wrong++;
+                            rb.get(0).setTextColor(0xffff0000);
+                        }
+                    }
 
+                    if(selected2 != -1) {
+                        if (rb.get(1).getText().equals("50")) {
+                            right++;
+                        } else {
+                            wrong++;
+                            rb.get(1).setTextColor(0xffff0000);
+                        }
 
-                if(rb.get(3).getText().equals("15"))
-                {
-                    right++;
+                    }
+                    if(selected3 != -1) {
+                        if (rb.get(2).getText().equals("8 semaines")) {
+                            right++;
+                        } else {
+                            wrong++;
+                            rb.get(2).setTextColor(0xffff0000);
+                        }
+                    }
+                    if(selected4 != -1) {
+                        if (rb.get(3).getText().equals("15")) {
+                            right++;
+                        } else {
+                            wrong++;
+                            rb.get(3).setTextColor(0xffff0000);
+                        }
+                    }
+                    if(selected5 != -1) {
+                        if (rb.get(4).getText().equals("4 denriers mois")) {
+                            right++;
+                        } else {
+                            wrong++;
+                            rb.get(4).setTextColor(0xffff0000);
+                        }
+                    }
+                    if(selected6 != -1) {
+                        if (rb.get(5).getText().equals("Non")) {
+                            right++;
+                        } else {
+                            wrong++;
+                            rb.get(5).setTextColor(0xffff0000);
+                        }
+                    }
+                    if(selected7 != -1) {
+                        if (rb.get(6).getText().equals("Non")) {
+                            right++;
+                        } else {
+                            wrong++;
+                            rb.get(6).setTextColor(0xffff0000);
+                        }
+                    }
+
+                    if(selected8 != -1) {
+                        if (rb.get(7).getText().equals("Non")) {
+                            right++;
+                        } else {
+                            wrong++;
+                            rb.get(7).setTextColor(0xffff0000);
+                        }
+                    }
+
+                    if(selected9 != -1) {
+                        if (rb.get(8).getText().equals("Non")) {
+                            right++;
+                        } else {
+                            wrong++;
+                            rb.get(8).setTextColor(0xffff0000);
+                        }
+                    }
+                    if(right < wrong)
+                    {
+                        text.setText(Html.fromHtml(":( <br> Vous avez eu " + right + " bonne(s) réponse(s) et " + wrong + " mauvaise(s) réponse(s)"));
+                        text.setTextColor(0xffff0000);
+                    }
+                    else if(right>=wrong)
+                    {
+                        text.setText(Html.fromHtml(":) <br> Vous avez eu " + right + " bonne(s) réponse(s) et " + wrong + " mauvaise(s) réponse(s)"));
+                        text.setTextColor(0xff00ff00);
+                    }
+
                 }
-                else
-                {
-                    wrong ++;
-                    rb.get(3).setTextColor(0xffff0000);
-                }
-
-
-                if(rb.get(4).getText().equals("4 denriers mois"))
-                {
-                    right++;
-                }
-                else
-                {
-                    wrong ++;
-                    rb.get(4).setTextColor(0xffff0000);
-                }
-
-                if(rb.get(5).getText().equals("Non"))
-                {
-                    right++;
-                }
-                else
-                {
-                    wrong ++;
-                    rb.get(5).setTextColor(0xffff0000);
-                }
-
-
-                if(rb.get(6).getText().equals("Non"))
-                {
-                    right++;
-                }
-                else
-                {
-                    wrong ++;
-                    rb.get(6).setTextColor(0xffff0000);
-                }
-
-
-                if(rb.get(7).getText().equals("Non"))
-                {
-                    right++;
-                }
-                else
-                {
-                    wrong ++;
-                    rb.get(7).setTextColor(0xffff0000);
-                }
-
-
-                if(rb.get(8).getText().equals("Non"))
-                {
-                    right++;
-                }
-                else
-                {
-                    wrong ++;
-                    rb.get(8).setTextColor(0xffff0000);
-                }
-
-
-                text.setText("Vous avez eu "+right+" bonnes réponses et "+wrong+" mauvaises réponses" );
-                text.setTextColor(0xffff0000);
-
+//                for(int j=0;j<rg.size();j++)
+//                    rg.get(j).setEnabled(false);
+                result.setEnabled(false);
+                result.setBackgroundColor(0xff888888);
             }
         });
+
 
 
     }
@@ -270,13 +275,20 @@ public class QuizzActivity extends AppCompatActivity
             }
             else if (id == R.id.nav_image)
             {
-                Intent i = new Intent(QuizzActivity.this, ScanActivity.class);
+                Intent i = new Intent(QuizzActivity.this, ScannActivity.class);
                 startActivity(i);
             }
             else if (id == R.id.nav_quizz)
             {
                 Intent i = new Intent(QuizzActivity.this, QuizzActivity.class);
                 startActivity(i);
+            }
+
+            else if (id == R.id.nav_deco)
+            {
+                Intent i = new Intent(QuizzActivity.this, LoginActivity.class);
+                startActivity(i);
+                finish();
             }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
